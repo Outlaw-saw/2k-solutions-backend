@@ -28,6 +28,12 @@ def configure_extensions(app: Flask) -> None:
     db.init_app(app)
     migrate.init_app(app, db)
     jwt.init_app(app)
+
+    if not app.config.get("TESTING", False):
+        with app.app_context():
+            db.create_all()
+            print("Database tables created")
+
     CORS(
         app,
         origins=app.config["CORS_ORIGINS"],

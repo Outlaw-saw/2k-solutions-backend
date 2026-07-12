@@ -10,8 +10,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
-RUN chmod +x entrypoint.sh
 
 EXPOSE 5000
 
-CMD ["./entrypoint.sh"]
+CMD gunicorn run:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --log-level debug --access-logfile -
