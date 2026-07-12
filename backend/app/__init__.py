@@ -16,6 +16,7 @@ def create_app(config_object: object = Config) -> Flask:
 
     configure_extensions(app)
     configure_logging(app)
+    register_root_route(app)
     register_blueprints(app)
     register_error_handlers(app)
     init_request_logger(app)
@@ -58,6 +59,11 @@ def register_blueprints(app: Flask) -> None:
     from app.api.v1 import api_v1_bp
     app.register_blueprint(api_v1_bp, url_prefix="/api/v1")
 
+
+def register_root_route(app: Flask) -> None:
+    @app.route("/")
+    def health():
+        return {"status": "ok", "message": "2K Solutions API is running"}
 
 def register_error_handlers(app: Flask) -> None:
     from app.middleware.error_handler import register_error_handlers as _register
