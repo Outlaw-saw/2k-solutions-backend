@@ -1,6 +1,7 @@
 #!/bin/bash
 echo "=== 2K Solutions Backend Entrypoint ==="
 echo "Python: $(python3 --version)"
+echo "PORT: $PORT"
 
 echo "--- Creating database tables ---"
 python3 -c "
