@@ -123,12 +123,13 @@
     </div>
   </div>
 
+  <script src="api.js"></script>
   <script>
     const form = document.getElementById('signup-form');
     form.querySelectorAll('input, select').forEach(el => {
       el.addEventListener('blur', () => { if (el.value.trim()) el.classList.remove('error'); });
     });
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', async function(e) {
       e.preventDefault();
       let valid = true;
       this.querySelectorAll('input, select').forEach(el => {
@@ -143,11 +144,25 @@
       const btn = document.getElementById('submit-btn');
       btn.disabled = true;
       btn.innerHTML = 'Creating Account <i class="fas fa-spinner fa-spin"></i>';
-      setTimeout(() => {
+      try {
+        const res = await AuthAPI.register({
+          first_name: document.getElementById('fname').value,
+          last_name: document.getElementById('lname').value,
+          email: document.getElementById('email').value,
+          phone: document.getElementById('phone').value,
+          interested_course_slug: document.getElementById('course').value,
+          password: document.getElementById('password').value,
+          terms_accepted: document.getElementById('terms').checked,
+        });
+        setToken(res.data.access_token);
         btn.style.display = 'none';
         document.getElementById('success-msg').style.display = 'flex';
         this.querySelectorAll('input, select').forEach(el => el.disabled = true);
-      }, 1200);
+      } catch (err) {
+        alert('Registration failed: ' + err.message);
+        btn.disabled = false;
+        btn.innerHTML = 'Create Account <i class="fas fa-arrow-right"></i>';
+      }
     });
   </script>
 </body>

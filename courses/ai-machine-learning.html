@@ -172,7 +172,7 @@
         el.addEventListener('blur', () => { if (el.value.trim()) el.classList.remove('error'); });
       });
       document.getElementById('signin-modal')?.addEventListener('click', function(e) { if (e.target === this) closeSigninModal(); });
-      document.getElementById('modal-signup-form')?.addEventListener('submit', function(e) {
+      document.getElementById('modal-signup-form')?.addEventListener('submit', async function(e) {
         e.preventDefault();
         let valid = true;
         this.querySelectorAll('input, select').forEach(el => {
@@ -186,10 +186,29 @@
         if (!valid) return;
         const btn = document.getElementById('m-submit-btn');
         btn.disabled = true; btn.innerHTML = 'Creating Account <i class="fas fa-spinner fa-spin"></i>';
-        setTimeout(() => { btn.style.display = 'none'; document.getElementById('m-success-msg').style.display = 'flex'; this.querySelectorAll('input, select').forEach(el => el.disabled = true); }, 1200);
+        try {
+          const res = await AuthAPI.register({
+            first_name: document.getElementById('m-fname').value,
+            last_name: document.getElementById('m-lname').value,
+            email: document.getElementById('m-email').value,
+            phone: document.getElementById('m-phone').value,
+            interested_course_slug: 'ai-machine-learning',
+            password: document.getElementById('m-password').value,
+            terms_accepted: document.getElementById('m-terms').checked,
+          });
+          setToken(res.data.access_token);
+          btn.style.display = 'none';
+          document.getElementById('m-success-msg').style.display = 'flex';
+          this.querySelectorAll('input, select').forEach(el => el.disabled = true);
+        } catch (err) {
+          alert('Registration failed: ' + err.message);
+          btn.disabled = false;
+          btn.innerHTML = 'Create Account <i class="fas fa-arrow-right"></i>';
+        }
       });
     });
   </script>
+  <script src="../api.js"></script>
   <div class="modal-overlay" id="signin-modal">
     <div class="modal-box">
       <button class="modal-close" onclick="closeSigninModal()">&times;</button>
