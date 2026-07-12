@@ -4,8 +4,6 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends libpq-dev && rm -rf /var/lib/apt/lists/*
 
-RUN ln -s /usr/local/bin/python3 /usr/local/bin/python
-
 COPY backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
