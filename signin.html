@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In - 2K Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .form-group input.error, .form-group select.error { border-color: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,0.08); }
+    .form-error { display: none; color: #ef4444; font-size: 12px; margin-top: 4px; align-items: center; gap: 4px; }
+    .form-error.show { display: flex; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', -apple-system, sans-serif; color: #1a1a2e; background: #f8fafc; line-height: 1.6; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .auth-wrap { display: flex; max-width: 880px; width: 100%; margin: 24px; border-radius: 24px; background: #fff; box-shadow: 0 20px 60px rgba(0,0,0,0.08); overflow: hidden; animation: fadeUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; }
+    @keyframes fadeUp { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+    .auth-left { flex: 1; padding: 48px 40px; display: flex; flex-direction: column; }
+    .auth-right { flex: 1; background: linear-gradient(135deg, #0f1d3e, #142c8e); color: #fff; padding: 48px 40px; display: flex; flex-direction: column; justify-content: center; }
+    .auth-right h2 { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+    .auth-right p { font-size: 15px; opacity: 0.8; line-height: 1.8; margin-bottom: 24px; }
+    .auth-right .feature { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; font-size: 14px; opacity: 0.85; }
+    .auth-right .feature i { width: 32px; height: 32px; border-radius: 8px; background: rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+    .logo { display: flex; align-items: center; gap: 8px; font-size: 20px; font-weight: 800; color: #142c8e; margin-bottom: 32px; }
+    .logo i { font-size: 22px; background: linear-gradient(135deg, #142c8e, #2563eb); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .auth-left h1 { font-size: 26px; font-weight: 700; color: #0f1d3e; margin-bottom: 6px; }
+    .auth-left .sub { font-size: 14px; color: #64748b; margin-bottom: 28px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 6px; }
+    .form-group input, .form-group select { width: 100%; padding: 12px 14px; border: 1.5px solid #e2e8f0; border-radius: 10px; font-size: 14px; font-family: inherit; color: #1a1a2e; background: #fff; transition: border-color 0.2s; outline: none; }
+    .form-group input:focus, .form-group select:focus { border-color: #142c8e; box-shadow: 0 0 0 3px rgba(20,44,142,0.08); }
+    .form-group input::placeholder { color: #94a3b8; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .btn-submit { width: 100%; padding: 13px; border: none; border-radius: 10px; background: #142c8e; color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-submit:hover { background: #1e40af; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(20,44,142,0.25); }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .auth-footer { text-align: center; margin-top: 20px; font-size: 13px; color: #64748b; }
+    .auth-footer a { color: #142c8e; font-weight: 600; text-decoration: none; }
+    .auth-footer a:hover { text-decoration: underline; }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #64748b; text-decoration: none; margin-bottom: 24px; }
+    .back-link:hover { color: #142c8e; }
+    .success-msg { display: none; align-items: center; gap: 10px; padding: 14px 18px; background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); border-radius: 10px; color: #059669; font-size: 14px; font-weight: 500; margin-top: 16px; }
+    .success-msg i { font-size: 18px; }
+    @media (max-width: 700px) {
+      .auth-wrap { flex-direction: column-reverse; }
+      .auth-right { padding: 32px 28px; }
+      .auth-left { padding: 32px 28px; }
+      .form-row { grid-template-columns: 1fr; }
+      .auth-right h2 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-wrap">
+    <div class="auth-left">
+      <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+      <div class="logo"><i class="fas fa-code"></i> 2K Solutions</div>
+      <h1>Create Your Account</h1>
+      <p class="sub">Sign up to enroll in courses and track your learning journey.</p>
+
+      <form id="signup-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" placeholder="John" required>
+          </div>
+          <div class="form-group">
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" placeholder="Doe" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="you@example.com" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" placeholder="+91 98765 43210" required>
+        </div>
+        <div class="form-group">
+          <label for="course">Interested Course</label>
+          <select id="course" required>
+            <option value="">Select a course</option>
+            <option value="software-development">Software Development</option>
+            <option value="web-development">Web Development</option>
+            <option value="data-analytics">Data Analytics</option>
+            <option value="cloud-computing">Cloud Computing</option>
+            <option value="ai-machine-learning">AI & Machine Learning</option>
+            <option value="app-development">App Development</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Create a password (min. 6 characters)" minlength="6" required>
+        </div>
+        <div class="form-group">
+          <label for="cpassword">Confirm Password</label>
+          <input type="password" id="cpassword" placeholder="Re-enter your password" required>
+        </div>
+        <div class="form-group" style="margin-bottom:20px;">
+          <label style="display:flex;align-items:center;gap:8px;font-weight:400;font-size:13px;color:#475569;cursor:pointer;">
+            <input type="checkbox" id="terms" required style="width:16px;height:16px;accent-color:#142c8e;">
+            I agree to the <a href="#" style="color:#142c8e;font-weight:600;">Terms & Conditions</a> and <a href="#" style="color:#142c8e;font-weight:600;">Privacy Policy</a>
+          </label>
+        </div>
+        <button type="submit" class="btn-submit" id="submit-btn">Create Account <i class="fas fa-arrow-right"></i></button>
+        <div class="success-msg" id="success-msg"><i class="fas fa-check-circle"></i> Account created! We'll reach out to you shortly.</div>
+      </form>
+
+      <div class="auth-footer">
+        Already have an account? <a href="#">Sign In</a>
+      </div>
+    </div>
+
+    <div class="auth-right">
+      <h2>Start Your Tech Journey</h2>
+      <p>Join thousands of students who transformed their careers with 2K Solutions.</p>
+      <div class="feature"><i class="fas fa-chalkboard-teacher"></i> Expert-led training from industry professionals</div>
+      <div class="feature"><i class="fas fa-project-diagram"></i> Hands-on projects that build real portfolio</div>
+      <div class="feature"><i class="fas fa-briefcase"></i> 95% placement rate with 50+ hiring partners</div>
+      <div class="feature"><i class="fas fa-certificate"></i> Industry-recognized certifications</div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('signup-form');
+    form.querySelectorAll('input, select').forEach(el => {
+      el.addEventListener('blur', () => { if (el.value.trim()) el.classList.remove('error'); });
+    });
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      let valid = true;
+      this.querySelectorAll('input, select').forEach(el => {
+        el.classList.remove('error');
+        if (el.hasAttribute('required') && !el.value.trim()) { el.classList.add('error'); valid = false; }
+        if (el.type === 'email' && el.value.trim() && !el.value.includes('@')) { el.classList.add('error'); valid = false; }
+      });
+      const pw = document.getElementById('password');
+      const cpw = document.getElementById('cpassword');
+      if (cpw.value && pw.value !== cpw.value) { cpw.classList.add('error'); valid = false; }
+      if (!valid) return;
+      const btn = document.getElementById('submit-btn');
+      btn.disabled = true;
+      btn.innerHTML = 'Creating Account <i class="fas fa-spinner fa-spin"></i>';
+      setTimeout(() => {
+        btn.style.display = 'none';
+        document.getElementById('success-msg').style.display = 'flex';
+        this.querySelectorAll('input, select').forEach(el => el.disabled = true);
+      }, 1200);
+    });
+  </script>
+</body>
+</html>

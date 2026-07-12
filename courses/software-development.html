@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Software Development - 2K Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', -apple-system, sans-serif; color: #1a1a2e; background: #f8fafc; line-height: 1.8; }
+    .top-bar { background: #142c8e; color: #fff; padding: 14px 24px; display: flex; align-items: center; gap: 12px; }
+    .top-bar a { color: #fff; text-decoration: none; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 6px; }
+    .top-bar a:hover { opacity: 0.85; }
+    .hero-bar { background: linear-gradient(135deg, #0f1d3e, #142c8e); color: #fff; padding: 60px 24px; text-align: center; }
+    .hero-bar h1 { font-size: 40px; font-weight: 800; margin-bottom: 8px; }
+    .hero-bar p { font-size: 18px; opacity: 0.85; max-width: 600px; margin: 0 auto; }
+    .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 60px 0; }
+    h2 { font-size: 28px; font-weight: 700; color: #0f1d3e; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+    h2 i { color: #142c8e; font-size: 24px; }
+    p { font-size: 16px; color: #475569; margin-bottom: 16px; }
+    ul { list-style: none; margin-bottom: 20px; }
+    ul li { padding: 10px 16px; background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; font-size: 15px; color: #334155; }
+    ul li i { color: #142c8e; width: 20px; text-align: center; font-size: 16px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .info-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 32px; }
+    .info-card h3 { font-size: 18px; font-weight: 600; color: #0f1d3e; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .info-card h3 i { color: #142c8e; }
+    .info-card p { font-size: 14px; margin-bottom: 0; }
+    .highlight { background: #eef2ff; border-left: 4px solid #142c8e; padding: 20px 24px; border-radius: 12px; margin-bottom: 20px; }
+    .highlight p { margin-bottom: 0; font-weight: 500; color: #1e293b; }
+    .btn-back { display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px; border-radius: 40px; background: #142c8e; color: #fff; text-decoration: none; font-size: 14px; font-weight: 600; transition: all 0.2s; }
+    .btn-back:hover { background: #1e40af; transform: translateY(-1px); }
+    .reveal { opacity: 0; transform: translateY(40px); transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .hero-bar { animation: heroIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; }
+    @keyframes heroIn { 0% { opacity: 0; transform: translateY(-30px) scale(0.98); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+    .info-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .info-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(20,44,142,0.12); }
+    ul li { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+    ul li:hover { transform: translateX(6px); box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+    @media (max-width: 768px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .hero-bar h1 { font-size: 28px; }
+      h2 { font-size: 22px; }
+    }
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(4px); }
+    .modal-overlay.active { display: flex; }
+    .modal-box { background: #fff; border-radius: 20px; max-width: 460px; width: 100%; padding: 36px 32px; box-shadow: 0 24px 80px rgba(0,0,0,0.2); animation: modalIn 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; position: relative; max-height: 90vh; overflow-y: auto; }
+    @keyframes modalIn { 0% { opacity: 0; transform: scale(0.92) translateY(20px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
+    .modal-close { position: absolute; top: 16px; right: 18px; background: none; border: none; font-size: 22px; color: #94a3b8; cursor: pointer; transition: color 0.15s; }
+    .modal-close:hover { color: #0f1d3e; }
+    .modal-box .logo-sm { display: flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 800; color: #142c8e; margin-bottom: 20px; }
+    .modal-box .logo-sm i { font-size: 20px; background: linear-gradient(135deg, #142c8e, #2563eb); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .modal-box h2 { font-size: 22px; font-weight: 700; color: #0f1d3e; margin-bottom: 4px; }
+    .modal-box .sub { font-size: 14px; color: #64748b; margin-bottom: 22px; }
+    .modal-box .form-group { margin-bottom: 14px; }
+    .modal-box .form-group label { display: block; font-size: 12px; font-weight: 600; color: #334155; margin-bottom: 4px; }
+    .modal-box .form-group input, .modal-box .form-group select { width: 100%; padding: 10px 12px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit; color: #1a1a2e; background: #fff; transition: border-color 0.2s; outline: none; }
+    .modal-box .form-group input:focus, .modal-box .form-group select:focus { border-color: #142c8e; box-shadow: 0 0 0 3px rgba(20,44,142,0.08); }
+    .modal-box .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .modal-box .btn-submit { width: 100%; padding: 12px; border: none; border-radius: 8px; background: #142c8e; color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .modal-box .btn-submit:hover { background: #1e40af; }
+    .modal-box .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+    .modal-box .success-msg { display: none; align-items: center; gap: 8px; padding: 12px 16px; background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); border-radius: 8px; color: #059669; font-size: 13px; font-weight: 500; margin-top: 12px; }
+    .modal-box .success-msg i { font-size: 16px; }
+    @media (max-width: 500px) { .modal-box { padding: 28px 20px; } .modal-box .form-row { grid-template-columns: 1fr; } }
+    .modal-box .form-group input.error, .modal-box .form-group select.error { border-color: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,0.08); }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <a href="../index.html"><i class="fas fa-arrow-left"></i> Back to 2K Solutions</a>
+  </div>
+
+  <div class="hero-bar">
+    <h1><i class="fab fa-python"></i> Software Development</h1>
+    <p>Master Python, Java, C++, and modern software engineering practices.</p>
+  </div>
+
+  <section class="reveal">
+    <div class="container">
+      <h2><i class="fas fa-info-circle"></i> Introduction</h2>
+      <p>Software Development is the process of designing, creating, testing, and maintaining computer programs and applications. It powers everything from mobile apps and websites to enterprise systems and artificial intelligence. In today's digital world, software is at the heart of every industry — healthcare, finance, entertainment, education, and more.</p>
+      <p>At 2K Solutions, our Software Development program takes you from fundamentals to advanced concepts, equipping you with the skills to build real-world applications that solve real problems.</p>
+    </div>
+  </section>
+
+  <section style="background:#fff;" class="reveal">
+    <div class="container">
+      <h2><i class="fas fa-question-circle"></i> What is Software Development?</h2>
+      <p>Software development is the process of conceiving, specifying, designing, programming, documenting, testing, and bug-fixing involved in creating and maintaining applications, frameworks, or other software components. It involves writing and maintaining the source code, but in a broader sense, it includes all processes from the initial conception of the desired software through to the final manifestation.</p>
+      <div class="highlight">
+        <p><i class="fas fa-lightbulb" style="color:#142c8e;margin-right:8px;"></i> "Software development is a systematic process that transforms user needs into functional, reliable, and efficient software systems."</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <div class="container">
+      <h2><i class="fas fa-graduation-cap"></i> What You Will Learn</h2>
+      <div class="grid-2">
+        <div class="info-card reveal reveal-delay-1">
+          <h3><i class="fab fa-python"></i> Python Programming</h3>
+          <p>Master Python from basics to advanced — data structures, OOP, file handling, libraries like NumPy and Pandas, and real-world scripting.</p>
+        </div>
+        <div class="info-card reveal reveal-delay-2">
+          <h3><i class="fab fa-java"></i> Java Development</h3>
+          <p>Learn Java fundamentals, object-oriented programming, multithreading, collections framework, and build robust enterprise applications.</p>
+        </div>
+        <div class="info-card reveal reveal-delay-3">
+          <h3><i class="fas fa-code"></i> C++ Programming</h3>
+          <p>Understand pointers, memory management, STL, algorithms, and systems programming concepts used in high-performance applications.</p>
+        </div>
+        <div class="info-card reveal">
+          <h3><i class="fas fa-tools"></i> Software Engineering</h3>
+          <p>Version control (Git), Agile methodologies, design patterns, testing, CI/CD pipelines, and software architecture principles.</p>
+        </div>
+        <div class="info-card reveal">
+          <h3><i class="fas fa-database"></i> Database Management</h3>
+          <p>SQL, database design, normalization, queries, and integration with backend applications using MySQL and PostgreSQL.</p>
+        </div>
+        <div class="info-card reveal">
+          <h3><i class="fas fa-cloud"></i> Deployment & DevOps</h3>
+          <p>Cloud deployment (AWS/Azure), Docker containers, basic DevOps practices, and monitoring application performance in production.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#fff;" class="reveal">
+    <div class="container">
+      <h2><i class="fas fa-briefcase"></i> What You Can Do</h2>
+      <ul>
+        <li><i class="fas fa-laptop-code"></i> Build web applications, REST APIs, and microservices</li>
+        <li><i class="fas fa-mobile-alt"></i> Develop cross-platform mobile applications</li>
+        <li><i class="fas fa-brain"></i> Create data processing pipelines and automation scripts</li>
+        <li><i class="fas fa-server"></i> Design and deploy scalable backend systems</li>
+        <li><i class="fas fa-chart-line"></i> Analyze and visualize data for business insights</li>
+        <li><i class="fas fa-rocket"></i> Launch your own SaaS products and startups</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <div class="container">
+      <h2><i class="fas fa-history"></i> History & Significance</h2>
+      <p>Software development has evolved dramatically since the 1940s — from machine code and punch cards to high-level languages, integrated development environments, and AI-assisted coding. The rise of the internet in the 1990s and the mobile revolution of the 2010s made software development one of the most sought-after skills globally. Today, software developers are the architects of the digital world, with demand growing every year across every sector.</p>
+      <div style="text-align:center;margin-top:32px;">
+        <a href="#" onclick="openSigninModal();return false;" class="btn-back"><i class="fas fa-pen"></i> Enroll Now — 6 Months</a>
+      </div>
+    </div>
+  </section>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+      window.openSigninModal = function() { document.getElementById('signin-modal').classList.add('active'); document.body.style.overflow = 'hidden'; };
+      window.closeSigninModal = function() { document.getElementById('signin-modal').classList.remove('active'); document.body.style.overflow = ''; };
+
+      document.querySelectorAll('#modal-signup-form input, #modal-signup-form select').forEach(el => {
+        el.addEventListener('blur', () => { if (el.value.trim()) el.classList.remove('error'); });
+      });
+      document.getElementById('signin-modal')?.addEventListener('click', function(e) { if (e.target === this) closeSigninModal(); });
+      document.getElementById('modal-signup-form')?.addEventListener('submit', function(e) {
+        e.preventDefault();
+        let valid = true;
+        this.querySelectorAll('input, select').forEach(el => {
+          el.classList.remove('error');
+          if (el.hasAttribute('required') && !el.value.trim()) { el.classList.add('error'); valid = false; }
+          if (el.type === 'email' && el.value.trim() && !el.value.includes('@')) { el.classList.add('error'); valid = false; }
+        });
+        const pw = document.getElementById('m-password');
+        const cpw = document.getElementById('m-cpassword');
+        if (cpw && cpw.value && pw.value !== cpw.value) { cpw.classList.add('error'); valid = false; }
+        if (!valid) return;
+        const btn = document.getElementById('m-submit-btn');
+        btn.disabled = true; btn.innerHTML = 'Creating Account <i class="fas fa-spinner fa-spin"></i>';
+        setTimeout(() => { btn.style.display = 'none'; document.getElementById('m-success-msg').style.display = 'flex'; this.querySelectorAll('input, select').forEach(el => el.disabled = true); }, 1200);
+      });
+    });
+  </script>
+  <div class="modal-overlay" id="signin-modal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeSigninModal()">&times;</button>
+      <div class="logo-sm"><i class="fas fa-code"></i> 2K Solutions</div>
+      <h2>Create Your Account</h2>
+      <p class="sub">Sign up to enroll and start learning.</p>
+      <form id="modal-signup-form" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="m-fname">First Name</label>
+            <input type="text" id="m-fname" placeholder="John" required>
+          </div>
+          <div class="form-group">
+            <label for="m-lname">Last Name</label>
+            <input type="text" id="m-lname" placeholder="Doe" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="m-email">Email Address</label>
+          <input type="email" id="m-email" placeholder="you@example.com" required>
+        </div>
+        <div class="form-group">
+          <label for="m-phone">Phone Number</label>
+          <input type="tel" id="m-phone" placeholder="+91 98765 43210" required>
+        </div>
+        <div class="form-group">
+          <label for="m-password">Password</label>
+          <input type="password" id="m-password" placeholder="Create a password (min. 6)" minlength="6" required>
+        </div>
+        <div class="form-group">
+          <label for="m-cpassword">Confirm Password</label>
+          <input type="password" id="m-cpassword" placeholder="Re-enter your password" required>
+        </div>
+        <div class="form-group" style="margin-bottom:16px;">
+          <label style="display:flex;align-items:center;gap:8px;font-weight:400;font-size:12px;color:#475569;cursor:pointer;">
+            <input type="checkbox" id="m-terms" required style="width:15px;height:15px;accent-color:#142c8e;flex-shrink:0;">
+            I agree to the <a href="#" style="color:#142c8e;font-weight:600;">Terms & Conditions</a>
+          </label>
+        </div>
+        <button type="submit" class="btn-submit" id="m-submit-btn">Create Account <i class="fas fa-arrow-right"></i></button>
+        <div class="success-msg" id="m-success-msg"><i class="fas fa-check-circle"></i> Account created! We'll reach out to you shortly.</div>
+      </form>
+      <div style="text-align:center;margin-top:14px;font-size:13px;color:#64748b;">Already have an account? <a href="#" style="color:#142c8e;font-weight:600;text-decoration:none;">Sign In</a></div>
+    </div>
+  </div>
+</body>
+</html>
+
+
+
+
