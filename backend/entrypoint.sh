@@ -1,9 +1,9 @@
 #!/bin/bash
 echo "=== 2K Solutions Backend Entrypoint ==="
-echo "Python: $(python --version)"
+echo "Python: $(python3 --version)"
 
 echo "--- Creating database tables ---"
-python -c "
+python3 -c "
 from app import create_app
 from config import Config
 app = create_app(Config)
