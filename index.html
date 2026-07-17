@@ -56,26 +56,9 @@
     .hero-stat-label { font-size: 13px; color: #64748b; margin-top: 2px; }
 
     .hero-visual { display: flex; justify-content: center; }
-    .mockup-card { width: 100%; max-width: 420px; background: #0f1d3e; border-radius: 20px; padding: 28px; box-shadow: 0 20px 60px rgba(15,29,62,0.15); }
-    .mockup-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-    .mockup-dots { display: flex; gap: 6px; }
-    .mockup-dot { width: 8px; height: 8px; border-radius: 50%; }
-    .mockup-dot:nth-child(1) { background: #ef4444; }
-    .mockup-dot:nth-child(2) { background: #f59e0b; }
-    .mockup-dot:nth-child(3) { background: #10b981; }
-    .mockup-header-text { color: rgba(255,255,255,0.5); font-size: 12px; font-weight: 500; }
-    .mockup-balance { background: rgba(255,255,255,0.06); border-radius: 14px; padding: 20px; margin-bottom: 20px; }
-    .mockup-balance-label { color: rgba(255,255,255,0.4); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-    .mockup-balance-amount { color: #fff; font-size: 28px; font-weight: 700; }
-    .mockup-balance-amount small { font-size: 16px; font-weight: 400; color: rgba(255,255,255,0.4); }
-    .mockup-skills { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-    .mockup-skill { background: rgba(255,255,255,0.06); border-radius: 12px; padding: 14px; }
-    .mockup-skill-icon { font-size: 18px; margin-bottom: 6px; }
-    .mockup-skill-name { color: #fff; font-size: 13px; font-weight: 600; }
-    .mockup-skill-count { color: rgba(255,255,255,0.4); font-size: 11px; }
-    .mockup-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.06); }
-    .mockup-footer-text { color: rgba(255,255,255,0.4); font-size: 12px; }
-    .mockup-badge { background: linear-gradient(135deg, #2563eb, #7c3aed); padding: 4px 12px; border-radius: 40px; font-size: 11px; color: #fff; font-weight: 600; }
+    .hero-carousel { width: 100%; max-width: 420px; aspect-ratio: 1 / 1; border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 20px 60px rgba(15,29,62,0.15); background: #e2e8f0; }
+    .hero-carousel .slides { display: flex; width: 100%; height: 100%; transition: transform 0.6s ease; }
+    .hero-carousel .slides img { width: 100%; height: 100%; object-fit: cover; flex-shrink: 0; }
 
     .section { padding: 88px 0; }
     .section-alt { background: #f8fafc; }
@@ -162,8 +145,8 @@
 
     .footer { background: #0f1d3e; color: #fff; padding: 56px 0 0; }
     .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.06); }
-    .footer-brand .logo-white { display: flex; align-items: center; gap: 8px; font-size: 20px; font-weight: 800; margin-bottom: 14px; }
-    .footer-brand .logo-white i { background: linear-gradient(135deg, #2563eb, #7c3aed); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .footer-brand .logo-white { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+    .footer-brand .logo-white img { height: 32px; width: auto; }
     .footer-brand p { font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.7; max-width: 300px; margin-bottom: 20px; }
     .footer-social { display: flex; gap: 8px; }
     .footer-social a { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.45); font-size: 14px; transition: all 0.2s; }
@@ -200,6 +183,13 @@
       .stack-inner h3 { font-size: 18px; }
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .about-image img { width: 100%; max-height: 420px; object-fit: cover; object-position: center top; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+    .about-content h3 { font-size: 24px; font-weight: 700; color: #0f1d3e; margin-bottom: 8px; }
+    .about-content .about-role { font-size: 15px; color: #2563eb; font-weight: 600; margin-bottom: 16px; letter-spacing: 0.02em; }
+    .about-content p { font-size: 15px; color: #64748b; line-height: 1.8; margin-bottom: 14px; }
+    @media (max-width: 768px) { .about-grid { grid-template-columns: 1fr; gap: 32px; } }
 
     .mobile-menu { display: none; position: fixed; top: 72px; left: 0; right: 0; bottom: 0; background: #fff; z-index: 999; padding: 24px; flex-direction: column; gap: 6px; }
     .mobile-menu.open { display: flex; }
@@ -240,7 +230,7 @@
 
   <header class="header">
     <div class="container header-inner">
-      <a href="#home" class="logo"><i class="fas fa-code"></i> 2K Solutions</a>
+      <a href="#home" class="logo"><img src="images/logo.png" alt="" style="height:38px;width:38px;border-radius:50%;object-fit:cover"> <span style="background:linear-gradient(135deg,#142c8e,#2563eb);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">2K Solutions</span></a>
       <nav>
         <ul class="nav-list">
           <li><a href="#home" class="nav-link">Home</a></li>
@@ -252,7 +242,6 @@
       </nav>
       <div class="header-actions">
         <a href="#contact" class="login">Log In</a>
-        <a href="#contact" class="btn-pill btn-pill-primary">Sign Up</a>
       </div>
       <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
         <span></span><span></span><span></span>
@@ -266,7 +255,6 @@
       <a href="#contact">Contact</a>
       <div class="mob-actions">
         <a href="#contact" class="btn-pill btn-pill-outline" style="text-align:center">Log In</a>
-        <a href="#contact" class="btn-pill btn-pill-primary" style="text-align:center">Sign Up</a>
       </div>
     </div>
   </header>
@@ -284,29 +272,17 @@
           <div class="hero-stats">
             <div><div class="hero-stat-num" data-target="500">0</div><div class="hero-stat-label">Students Trained</div></div>
             <div><div class="hero-stat-num" data-target="95">0</div><div class="hero-stat-label">Placement Rate %</div></div>
-            <div><div class="hero-stat-num" data-target="50">0</div><div class="hero-stat-label">Expert Mentors</div></div>
-            <div><div class="hero-stat-num" data-target="30">0</div><div class="hero-stat-label">Hiring Partners</div></div>
+            <div><div class="hero-stat-num" data-target="5">0</div><div class="hero-stat-label">Hiring Partners</div></div>
           </div>
         </div>
         <div class="hero-visual reveal">
-          <div class="mockup-card">
-            <div class="mockup-header">
-              <div class="mockup-dots"><div class="mockup-dot"></div><div class="mockup-dot"></div><div class="mockup-dot"></div></div>
-              <span class="mockup-header-text">2K Dashboard</span>
-            </div>
-            <div class="mockup-balance">
-              <div class="mockup-balance-label">Your Progress</div>
-              <div class="mockup-balance-amount">78% <small>Complete</small></div>
-            </div>
-            <div class="mockup-skills">
-              <div class="mockup-skill"><div class="mockup-skill-icon">🐍</div><div class="mockup-skill-name">Python</div><div class="mockup-skill-count">6 modules</div></div>
-              <div class="mockup-skill"><div class="mockup-skill-icon">⚛️</div><div class="mockup-skill-name">React</div><div class="mockup-skill-count">4 modules</div></div>
-              <div class="mockup-skill"><div class="mockup-skill-icon">☁️</div><div class="mockup-skill-name">AWS</div><div class="mockup-skill-count">5 modules</div></div>
-              <div class="mockup-skill"><div class="mockup-skill-icon">📊</div><div class="mockup-skill-name">SQL</div><div class="mockup-skill-count">3 modules</div></div>
-            </div>
-            <div class="mockup-footer">
-              <span class="mockup-footer-text">Next milestone: Full-Stack</span>
-              <span class="mockup-badge">In Progress</span>
+          <div class="hero-carousel" id="heroCarousel">
+            <div class="slides">
+              <img src="c_images/1.jpg" alt="Image 1">
+              <img src="c_images/2.jpg" alt="Image 2">
+              <img src="c_images/3.jpg" alt="Image 3">
+              <img src="c_images/4.jpg" alt="Image 4">
+              <img src="c_images/5.jpg" alt="Image 5">
             </div>
           </div>
         </div>
@@ -479,10 +455,26 @@
       <div class="cards-3">
         <div class="achieve reveal"><div class="achieve-icon"><i class="fas fa-user-graduate"></i></div><span class="achieve-num" data-target="500">0</span><span class="achieve-label">Students Trained</span></div>
         <div class="achieve reveal"><div class="achieve-icon"><i class="fas fa-briefcase"></i></div><span class="achieve-num" data-target="95">0</span><span class="achieve-label">Placement Rate %</span></div>
-        <div class="achieve reveal"><div class="achieve-icon"><i class="fas fa-chalkboard-teacher"></i></div><span class="achieve-num" data-target="50">0</span><span class="achieve-label">Expert Mentors</span></div>
-        <div class="achieve reveal"><div class="achieve-icon"><i class="fas fa-handshake"></i></div><span class="achieve-num" data-target="30">0</span><span class="achieve-label">Hiring Partners</span></div>
-        <div class="achieve reveal"><div class="achieve-icon"><i class="fas fa-award"></i></div><span class="achieve-num" data-target="15">0</span><span class="achieve-label">Awards Won</span></div>
-        <div class="achieve reveal"><div class="achieve-icon"><i class="fas fa-laptop"></i></div><span class="achieve-num" data-target="200">0</span><span class="achieve-label">Live Projects</span></div>
+        <div class="achieve reveal"><div class="achieve-icon"><i class="fas fa-handshake"></i></div><span class="achieve-num" data-target="5">0</span><span class="achieve-label">Hiring Partners</span></div>
+        <div class="achieve reveal"><div class="achieve-icon"><i class="fas fa-laptop"></i></div><span class="achieve-num" data-target="200">0</span><span class="achieve-label">Projects</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="section section-alt">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2 class="section-title">About Our <span>Founder</span></h2>
+        <p class="section-desc">The vision behind 2K Solutions — a commitment to transforming tech education.</p>
+      </div>
+      <div class="about-grid">
+        <div class="about-image reveal"><img src="images/founder.jpg" alt="Founder"></div>
+        <div class="about-content reveal">
+          <h3>Founder Name</h3>
+          <div class="about-role">CEO & Founder, 2K Solutions</div>
+          <p>With over a decade of experience in the tech industry, our founder established 2K Solutions with a single mission: bridge the gap between academic learning and industry demands. What started as a small training initiative has grown into a premier tech education platform that has transformed hundreds of careers.</p>
+          <p>Our founder's hands-on approach ensures that every course, every project, and every placement opportunity meets the highest standards of quality and relevance. The result? A 95% placement rate and a community of successful professionals across top companies.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -563,7 +555,7 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <div class="logo-white"><i class="fas fa-code"></i> 2K Solutions</div>
+          <div class="logo-white"><img src="images/logo.png" alt="2K Solutions"></div>
           <p>Empowering tech careers through quality education, hands-on training, and industry connections.</p>
           <div class="footer-social">
             <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
@@ -690,6 +682,17 @@
         });
       }
     });
+
+    const carousel = document.getElementById('heroCarousel');
+    if (carousel) {
+      const slides = carousel.querySelector('.slides');
+      const total = slides.children.length;
+      let idx = 0;
+      setInterval(() => {
+        idx = (idx + 1) % total;
+        slides.style.transform = `translateX(-${idx * 100}%)`;
+      }, 3000);
+    }
   </script>
 </body>
 </html>

@@ -344,10 +344,8 @@ def seed_database() -> None:
     achievement_milestones = [
         {"label": "Students Trained", "value": 500, "icon_class": "fas fa-user-graduate", "section": "milestones", "display_order": 1},
         {"label": "Placement Rate %", "value": 95, "icon_class": "fas fa-briefcase", "section": "milestones", "display_order": 2},
-        {"label": "Expert Mentors", "value": 50, "icon_class": "fas fa-chalkboard-teacher", "section": "milestones", "display_order": 3},
-        {"label": "Hiring Partners", "value": 30, "icon_class": "fas fa-handshake", "section": "milestones", "display_order": 4},
-        {"label": "Awards Won", "value": 15, "icon_class": "fas fa-award", "section": "milestones", "display_order": 5},
-        {"label": "Live Projects", "value": 200, "icon_class": "fas fa-laptop", "section": "milestones", "display_order": 6},
+        {"label": "Hiring Partners", "value": 5, "icon_class": "fas fa-handshake", "section": "milestones", "display_order": 3},
+        {"label": "Projects", "value": 200, "icon_class": "fas fa-laptop", "section": "milestones", "display_order": 4},
     ]
     for m in achievement_milestones:
         db.session.add(Milestone(**m))
