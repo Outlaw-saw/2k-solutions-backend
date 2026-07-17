@@ -14,9 +14,23 @@
     .top-bar { background: #142c8e; color: #fff; padding: 14px 24px; display: flex; align-items: center; gap: 12px; }
     .top-bar a { color: #fff; text-decoration: none; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 6px; }
     .top-bar a:hover { opacity: 0.85; }
-    .hero-bar { background: linear-gradient(135deg, #0f1d3e, #142c8e); color: #fff; padding: 60px 24px; text-align: center; }
-    .hero-bar h1 { font-size: 40px; font-weight: 800; margin-bottom: 8px; }
-    .hero-bar p { font-size: 18px; opacity: 0.85; max-width: 600px; margin: 0 auto; }
+    .hero-bar { position: relative; isolation: isolate; color: #fff; padding: 80px 24px; text-align: center; overflow: hidden; background: linear-gradient(160deg, #060d1f 0%, #0a1628 25%, #0f1d3e 50%, #142c8e 80%, #1a237e 100%); min-height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .hero-bar::before { content: ''; position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse at 50% 50%, rgba(15,29,62,0.2) 0%, rgba(6,13,31,0.55) 100%); pointer-events: none; }
+    .hero-bar::after { content: ''; position: absolute; inset: 0; z-index: 0; background-image: repeating-linear-gradient(0deg, transparent, transparent 38px, rgba(255,255,255,0.015) 38px, rgba(255,255,255,0.015) 39px), repeating-linear-gradient(90deg, transparent, transparent 38px, rgba(255,255,255,0.015) 38px, rgba(255,255,255,0.015) 39px); pointer-events: none; }
+    .hero-bar .bg-glow { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; }
+    .hero-bar .bg-glow.g1 { width: 400px; height: 400px; background: rgba(37,99,235,0.12); top: -100px; right: -100px; }
+    .hero-bar .bg-glow.g2 { width: 350px; height: 350px; background: rgba(99,102,241,0.08); bottom: -120px; left: -80px; }
+    .hero-bar .bg-glow.g3 { width: 250px; height: 250px; background: rgba(20,44,142,0.15); top: 50%; left: 50%; transform: translate(-50%,-50%); }
+    .hero-bar .decor { position: absolute; z-index: 0; pointer-events: none; font-family: 'Courier New', monospace; color: rgba(255,255,255,0.5); }
+    .hero-bar .decor i { font-size: 22px; color: rgba(255,255,255,0.4); }
+    .hero-bar .decor.code { font-size: 11px; line-height: 1.7; white-space: pre; opacity: 0.1; }
+    .hero-bar .decor.icon { opacity: 0.1; }
+    .hero-bar .decor.node { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.3); opacity: 0.2; }
+    .hero-bar .decor.line { width: 40px; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); opacity: 0.15; }
+    .hero-bar h1 { position: relative; z-index: 1; font-size: 40px; font-weight: 800; margin-bottom: 12px; text-shadow: 0 2px 20px rgba(6,13,31,0.5); }
+    .hero-bar h1 i { margin-right: 8px; }
+    .hero-bar p { position: relative; z-index: 1; font-size: 18px; opacity: 0.9; max-width: 600px; margin: 0 auto; text-shadow: 0 1px 12px rgba(6,13,31,0.4); }
+    .hero-bar .hero-content { position: relative; z-index: 1; }
     .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
     section { padding: 60px 0; }
     h2 { font-size: 28px; font-weight: 700; color: #0f1d3e; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
@@ -41,13 +55,16 @@
     .reveal-delay-3 { transition-delay: 0.3s; }
     .reveal-delay-4 { transition-delay: 0.4s; }
     .hero-bar { animation: heroIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; }
-    @keyframes heroIn { 0% { opacity: 0; transform: translateY(-30px) scale(0.98); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes heroIn { 0% { opacity: 0; transform: translateY(-20px); } 100% { opacity: 1; transform: translateY(0); } }
+    .hero-bar .decor { animation: fadeIn 1.2s ease both; }
+    @keyframes fadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
     .info-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
     .info-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(20,44,142,0.12); }
     ul li { transition: transform 0.25s ease, box-shadow 0.25s ease; }
     ul li:hover { transform: translateX(6px); box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
     @media (max-width: 768px) {
       .grid-2 { grid-template-columns: 1fr; }
+      .hero-bar { padding: 60px 20px; min-height: 260px; }
       .hero-bar h1 { font-size: 28px; }
       h2 { font-size: 22px; }
     }
@@ -81,8 +98,31 @@
   </div>
 
   <div class="hero-bar">
-    <h1><i class="fab fa-python"></i> Software Development</h1>
-    <p>Master Python, Java, C++, and modern software engineering practices.</p>
+    <div class="bg-glow g1"></div>
+    <div class="bg-glow g2"></div>
+    <div class="bg-glow g3"></div>
+    <span class="decor code" style="top:8%;left:4%;">def hello():<br>    print("world")</span>
+    <span class="decor code" style="top:12%;right:6%;">import numpy<br>import pandas</span>
+    <span class="decor code" style="bottom:15%;left:7%;">&lt;html&gt;<br>&lt;body&gt;</span>
+    <span class="decor code" style="bottom:10%;right:5%;">console.log(<br>  "hello" )</span>
+    <span class="decor icon" style="top:18%;left:12%;"><i class="fab fa-python"></i></span>
+    <span class="decor icon" style="top:8%;left:28%;"><i class="fab fa-java"></i></span>
+    <span class="decor icon" style="bottom:20%;right:18%;"><i class="fab fa-js"></i></span>
+    <span class="decor icon" style="top:25%;right:10%;"><i class="fas fa-code"></i></span>
+    <span class="decor icon" style="bottom:8%;left:22%;"><i class="fas fa-database"></i></span>
+    <span class="decor icon" style="bottom:25%;right:8%;"><i class="fas fa-cloud"></i></span>
+    <span class="decor node" style="top:20%;left:22%;"></span>
+    <span class="decor node" style="top:22%;left:24%;"></span>
+    <span class="decor node" style="top:18%;right:30%;"></span>
+    <span class="decor node" style="top:16%;right:28%;"></span>
+    <span class="decor node" style="bottom:30%;left:30%;"></span>
+    <span class="decor node" style="bottom:28%;left:32%;"></span>
+    <span class="decor line" style="top:20%;left:22%;"></span>
+    <span class="decor line" style="top:18%;right:30%;"></span>
+    <div class="hero-content">
+      <h1><i class="fab fa-python"></i> Software Development</h1>
+      <p>Master Python, Java, C++, and modern software engineering practices.</p>
+    </div>
   </div>
 
   <section class="reveal">
